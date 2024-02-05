@@ -1,58 +1,54 @@
 <?php
 
 class Alcancia {
-    private $monedas;
+    private $monedasPorDenominacion;
 
     public function __construct() {
-        $this->monedas = array(
-            '$1' => 0,
-            '$2' => 0,
-            '$5' => 0,
-            '$10' => 0,
-            '$20' => 0,
-            '$50' => 0,
-            '$100' => 0,
-            '$200' => 0,
-            '$500' => 0,
-            '$1000' => 0
+        $this->monedasPorDenominacion = array(
+            '1' => 0,
+            '2' => 0,
+            '5' => 0,
+            '10' => 0,
+            '20' => 0,
+            '50' => 0,
+            '100' => 0,
+            '200' => 0,
+            '500' => 0,
+            '1000' => 0,
         );
     }
 
     public function agregarMoneda($denominacion) {
-        if (array_key_exists($denominacion, $this->monedas)) {
-            $this->monedas[$denominacion]++;
-            echo "Se ha agregado una moneda de $denominacion.<br>";
-        } else {
-            echo "Denominación no válida.<br>";
+        if (array_key_exists($denominacion, $this->monedasPorDenominacion)) {
+            $this->monedasPorDenominacion[$denominacion]++;
         }
-    }
-
-    public function contarMonedas() {
-        return $this->monedas;
     }
 
     public function calcularTotal() {
         $total = 0;
-        foreach ($this->monedas as $denominacion => $cantidad) {
-            $total += $cantidad * intval(substr($denominacion, 1));
+        foreach ($this->monedasPorDenominacion as $denominacion => $cantidad) {
+            $total += $denominacion * $cantidad;
         }
         return $total;
     }
 
     public function romperAlcancia() {
-        $this->monedas = array(
-            '$1' => 0,
-            '$2' => 0,
-            '$5' => 0,
-            '$10' => 0,
-            '$20' => 0,
-            '$50' => 0,
-            '$100' => 0,
-            '$200' => 0,
-            '$500' => 0,
-            '$1000' => 0
+        $this->monedasPorDenominacion = array(
+            '1' => 0,
+            '2' => 0,
+            '5' => 0,
+            '10' => 0,
+            '20' => 0,
+            '50' => 0,
+            '100' => 0,
+            '200' => 0,
+            '500' => 0,
+            '1000' => 0,
         );
-        echo "La alcancía ha sido rota. ¡Contenido vaciado!<br>";
+    }
+
+    public function getMonedasPorDenominacion() {
+        return $this->monedasPorDenominacion;
     }
 }
 
