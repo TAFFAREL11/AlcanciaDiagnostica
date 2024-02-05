@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Alcancía</title>
+</head>
+<body>
+    <h1>Alcancía</h1>
+
+    <?php
+        include 'Alcancia.php';
+
+        session_start();
+
+        if (!isset($_SESSION['alcancia'])) {
+            $_SESSION['alcancia'] = new Alcancia();
+        }
+
+        $alcancia = $_SESSION['alcancia'];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['agregar'])) {
+                $denominacion = $_POST['denominacion'];
+                $alcancia->agregarMoneda($denominacion);
+            } elseif (isset($_POST['contar'])) {
+                $monedas = $alcancia->contarMonedas();
+                echo '<pre>';
+                print_r($monedas);
+                echo '</pre>';
+            } elseif (isset($_POST['total'])) {
+                $total = $alcancia->calcularTotal();
+                echo "Total ahorrado: $".$total."<br>";
+            } elseif (isset($_POST['romper'])) {
+                $alcancia->romperAlcancia();
+            }
+        }
+    ?>
+
+    <form method="post" action="">
+        <label>Agregar moneda:</label>
+        <select name="denominacion">
+            <option value="$1">$1</option>
+            <option value="$2">$2</option>
+            <option value="$5">$5</option>
+            <option value="$10">$10</option>
+            <option value="$20">$20</option>
+            <option value="$50">$50</option>
+            <option value="$100">$100</option>
+            <option value="$200">$200</option>
+            <option value="$500">$500</option>
+            <option value="$1000">$1000</option>
+        </select>
+        <input type="submit" name="agregar" value="Agregar">
+    </form>
+
+    <form method="post" action="">
+        <input type="submit" name="contar" value="Contar monedas">
+    </form>
+
+    <form method="post" action="">
+        <input type="submit" name="total" value="Calcular total">
+    </form>
+
+    <form method="post" action="">
+        <input type="submit" name="romper" value="Romper alcancía">
+    </form>
+
+</body>
+</html>
